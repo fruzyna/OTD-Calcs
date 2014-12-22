@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -11,7 +12,7 @@ import android.widget.LinearLayout;
 /**
  * Created by mail929 on 12/21/14.
  */
-public class SettingsActivity extends Activity
+public class SettingsActivity extends ActionBarActivity
 {
     EditText newlt;
     EditText transfer;
@@ -20,6 +21,8 @@ public class SettingsActivity extends Activity
     EditText cook;
     EditText chicago;
     EditText doc;
+
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,7 +38,7 @@ public class SettingsActivity extends Activity
         chicago = (EditText) findViewById(R.id.chicago);
         doc = (EditText) findViewById(R.id.doc);
 
-        SharedPreferences sharedPref = this.getSharedPreferences("otd", Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences("otd", Context.MODE_PRIVATE);
 
         newlt.setText(sharedPref.getString("newlt", "196"));
         transfer.setText(sharedPref.getString("transfer", "122"));
@@ -49,8 +52,6 @@ public class SettingsActivity extends Activity
     @Override
     public void onBackPressed()
     {
-        super.onBackPressed();
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("newlt", newlt.getText().toString());
         editor.putString("transfer", transfer.getText().toString());
@@ -60,5 +61,6 @@ public class SettingsActivity extends Activity
         editor.putString("chicago", chicago.getText().toString());
         editor.putString("doc", doc.getText().toString());
         editor.commit();
+        super.onBackPressed();
     }
 }

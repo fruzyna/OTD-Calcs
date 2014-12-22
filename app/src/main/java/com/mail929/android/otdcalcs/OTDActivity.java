@@ -1,17 +1,21 @@
 package com.mail929.android.otdcalcs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -27,6 +31,8 @@ public class OTDActivity extends ActionBarActivity
 
     Context context;
 
+    static SharedPreferences sharedPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,6 +43,8 @@ public class OTDActivity extends ActionBarActivity
 
         main = (LinearLayout) findViewById(R.id.content);
         button = (Button) findViewById(R.id.button);
+
+        sharedPref = getSharedPreferences("otd", Context.MODE_PRIVATE);
 
         final CheckBox cb = (CheckBox) findViewById(R.id.otdcb);
         if(cb.isChecked())
@@ -69,12 +77,13 @@ public class OTDActivity extends ActionBarActivity
     {
         LayoutInflater inflater = LayoutInflater.from(context);
         final View v = inflater.inflate(R.layout.calc_otd, main);
+        setup(v);
+
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                SharedPreferences sharedPref = context.getSharedPreferences("otd", Context.MODE_PRIVATE);
                 EditText pricev = (EditText) v.findViewById(R.id.price);
                 EditText docv = (EditText) v.findViewById(R.id.doc);
                 EditText tradev = (EditText) v.findViewById(R.id.trade);
@@ -137,12 +146,11 @@ public class OTDActivity extends ActionBarActivity
     {
         LayoutInflater inflater = LayoutInflater.from(context);
         final View v = inflater.inflate(R.layout.calc_price, main);
-        button.setOnClickListener(new View.OnClickListener()
-        {
+        setup(v);
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                SharedPreferences sharedPref = context.getSharedPreferences("otd", Context.MODE_PRIVATE);
+            public void onClick(View view) {
                 EditText otdv = (EditText) v.findViewById(R.id.otd);
                 EditText docv = (EditText) v.findViewById(R.id.doc);
                 EditText tradev = (EditText) v.findViewById(R.id.trade);
@@ -163,8 +171,7 @@ public class OTDActivity extends ActionBarActivity
                 double lt = 0;
                 double price;
 
-                switch (ltv.getCheckedRadioButtonId())
-                {
+                switch (ltv.getCheckedRadioButtonId()) {
                     case R.id.newlt:
                         lt = Double.parseDouble(sharedPref.getString("newlt", "196"));
                         break;
@@ -179,8 +186,7 @@ public class OTDActivity extends ActionBarActivity
                 subtotalv.setText(String.format("%.2f", subtotal));
 
                 double taxpercent = 0;
-                switch (taxesv.getCheckedRadioButtonId())
-                {
+                switch (taxesv.getCheckedRadioButtonId()) {
                     case R.id.dupage:
                         taxpercent = Double.parseDouble(sharedPref.getString("dupage", "7.25"));
                         break;
@@ -204,6 +210,24 @@ public class OTDActivity extends ActionBarActivity
                 pricev.setText(String.format("%.2f", price));
             }
         });
+    }
+
+    public void setup(View v)
+    {
+        EditText docv = (EditText) v.findViewById(R.id.doc);
+        RadioButton dupage = (RadioButton) v.findViewById(R.id.dupage);
+        RadioButton cook = (RadioButton) v.findViewById(R.id.cook);
+        RadioButton chicago = (RadioButton) v.findViewById(R.id.chicago);
+        RadioButton newlt = (RadioButton) v.findViewById(R.id.newlt);
+        RadioButton transfer = (RadioButton) v.findViewById(R.id.transfer);
+        RadioButton out = (RadioButton) v.findViewById(R.id.out);
+        dupage.setText("DuPage - " + sharedPref.getString("dupage", "7.25") + "%");
+        cook.setText("Cook - " + sharedPref.getString("cook", "8.25") + "%");
+        chicago.setText("Chicago - " + sharedPref.getString("chicago", "9.50") + "%");
+        newlt.setText("New - $" + sharedPref.getString("new", "196"));
+        transfer.setText("Transfer - $" + sharedPref.getString("transfer", "122"));
+        out.setText("Out - $" + sharedPref.getString("out", "10"));
+        docv.setText(sharedPref.getString("doc", "191"));
     }
 
     /**
@@ -268,5 +292,29 @@ public class OTDActivity extends ActionBarActivity
             super.onDestroy();
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_otd, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings)
+        {
+            Intent goSettings = new Intent(this, SettingsActivity.class);
+            this.startActivity(goSettings);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

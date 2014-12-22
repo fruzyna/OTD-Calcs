@@ -37,27 +37,27 @@
         android:layout_height="wrap_content"
         android:text="$"
         android:id="@+id/textView17"
-        android:layout_alignTop="@+id/textView20"
-        android:layout_alignLeft="@+id/newlt"
-        android:layout_alignStart="@+id/newlt" />
+        android:layout_alignBottom="@+id/newlt"
+        android:layout_toLeftOf="@+id/newlt"
+        android:layout_toStartOf="@+id/newlt" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$"
         android:id="@+id/textView18"
-        android:layout_alignTop="@+id/textView22"
-        android:layout_alignLeft="@+id/out"
-        android:layout_alignStart="@+id/out" />
+        android:layout_alignBottom="@+id/out"
+        android:layout_toLeftOf="@+id/out"
+        android:layout_toStartOf="@+id/out" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$"
         android:id="@+id/textView19"
-        android:layout_alignTop="@+id/textView21"
-        android:layout_alignLeft="@+id/transfer"
-        android:layout_alignStart="@+id/transfer" />
+        android:layout_above="@+id/out"
+        android:layout_toLeftOf="@+id/transfer"
+        android:layout_toStartOf="@+id/transfer" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -212,9 +212,9 @@
         android:inputType="numberSigned"
         android:ems="10"
         android:id="@+id/doc"
-        android:layout_below="@+id/chicago"
-        android:layout_alignLeft="@+id/chicago"
-        android:layout_alignStart="@+id/chicago" />
+        android:layout_below="@+id/textView30"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -222,6 +222,6 @@
         android:text="$"
         android:id="@+id/textView32"
         android:layout_alignBottom="@+id/doc"
-        android:layout_toLeftOf="@+id/out"
-        android:layout_toStartOf="@+id/out" />
+        android:layout_toLeftOf="@+id/doc"
+        android:layout_toStartOf="@+id/doc" />
 </RelativeLayout>
