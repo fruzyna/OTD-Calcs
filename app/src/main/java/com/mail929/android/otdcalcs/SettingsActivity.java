@@ -62,5 +62,6 @@ public class SettingsActivity extends ActionBarActivity
         editor.putString("doc", doc.getText().toString());
         editor.commit();
         super.onBackPressed();
+        OTDActivity.sharedPref = sharedPref;
     }
 }
