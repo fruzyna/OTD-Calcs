@@ -145,6 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="DuPage 7.25%"
+            android:checked="true"
             android:id="@+id/dupage"/>
 
         <RadioButton
@@ -172,6 +173,7 @@
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
+        android:text="0"
         android:id="@+id/percent"
         android:layout_gravity="center_horizontal"
         android:layout_alignBottom="@+id/taxes"
@@ -224,6 +226,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New $196"
+            android:checked="true"
             android:id="@+id/newlt" />
 
         <RadioButton
